@@ -1,0 +1,78 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    color: #00ff88;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.logo {
+    width: 140px;
+    height: 140px;
+    margin: 32px auto 48px;
+    display: block;
+}
+
+.input-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.currency-select {
+    background: #19191c;
+    border: none;
+    border-radius: 12px;
+    color: #00ff88;
+    font-size: 22px;
+    font-weight: bold;
+    height: 56px;
+    width: 110px;
+    padding: 0 18px;
+}
+
+.input-price {
+    background: #19191c;
+    border: none;
+    border-radius: 12px;
+    color: #00ff88;
+    font-size: 22px;
+    height: 56px;
+    flex: 1;
+    padding: 0 18px;
+}
+
+#rates-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.rate-row {
+    background: #19191c;
+    border-radius: 14px;
+    padding: 0 18px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.rate-label {
+    background: transparent;
+    border: none;
+    color: #00ff88;
+    font-size: 22px;
+    font-weight: bold;
+    width: 80px;
+    margin-right: 18px;
+}
+
+.rate-value {
+    font-size: 24px;
+}
