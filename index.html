@@ -25,15 +25,15 @@
         }
 
         html, body {
-            overflow: hidden;  /* Убирает прокрутку */
+            overflow: hidden;
             width: 100%;
             height: 100%;
-            position: fixed;   /* Фиксирует страницу */
+            position: fixed;
         }
 
         body {
-            background: #000;  /* Цвет фона (чёрный) */
-            color: #fff;       /* Цвет текста (белый) */
+            background: #000;
+            color: #fff;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
             display: flex;
             justify-content: center;
@@ -47,37 +47,85 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 15px 15px 20px 15px;  /* Отступы: верх 15px, бока 15px, низ 20px */
+            padding: 15px 15px 20px 15px;
         }
 
-        /* ========== ЛОГОТИП ========== */
+        /* ========== ЛОГОТИП И КНОПКА ОБНОВЛЕНИЯ ========== */
+        .logo-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
         .logo {
-            width: 120px;      /* Ширина логотипа */
-            height: 120px;     /* Высота логотипа */
-            margin: 0 auto 10px;  /* Отступ снизу от логотипа 10px */
+            width: 120px;
+            height: 120px;
             display: block;
         }
 
-        /* ========== ПОЛЕ ВВОДА И СЕЛЕКТОР ========== */
+        /* Кнопка обновления курса */
+        .refresh-btn {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #2a2a2e;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            outline: none;
+            transition: transform 0.3s ease;
+        }
+
+        .refresh-btn:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .refresh-btn.spinning {
+            animation: spin 1s linear;
+        }
+
+        @keyframes spin {
+            from { transform: translateY(-50%) rotate(0deg); }
+            to { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        /* Иконка стрелочек обновления */
+        .refresh-icon {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: #fff;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
         .input-row {
             display: flex;
-            gap: 8px;          /* Расстояние между селектором и полем ввода */
-            margin-bottom: 12px;  /* Отступ снизу от поля ввода */
+            gap: 8px;
+            margin-bottom: 12px;
             width: 100%;
             flex-shrink: 0;
         }
 
-        /* Селектор валюты (RU, VN, US и т.д.) */
         .currency-select {
-            background: #2a2a2e;   /* Цвет фона селектора */
+            background: #2a2a2e;
             border: none;
-            border-radius: 12px;   /* Закругление углов */
+            border-radius: 12px;
             color: #fff;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            font-size: 22px;       /* Размер шрифта в селекторе */
+            font-size: 22px;
             font-weight: 600;
-            height: 68px;          /* Высота селектора */
-            width: 68px;           /* Ширина селектора */
+            height: 68px;
+            width: 68px;
             min-width: 68px;
             max-width: 68px;
             text-align: center;
@@ -85,64 +133,66 @@
             flex-shrink: 0;
         }
 
-        /* Поле для ввода суммы */
         .input-price {
-            background: #2a2a2e;   /* Цвет фона поля ввода */
+            background: #2a2a2e;
             border: none;
-            border-radius: 12px;   /* Закругление углов */
+            border-radius: 12px;
             color: #fff;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            font-size: 22px;       /* Размер шрифта в поле ввода */
+            font-size: 22px;
             font-weight: 600;
-            height: 68px;          /* Высота поля ввода */
+            height: 68px;
             flex: 1;
             min-width: 0;
-            padding: 0 18px;       /* Отступы внутри поля (слева и справа) */
+            padding: 0 18px;
             outline: none;
         }
 
         .input-price::placeholder {
-            color: #666;           /* Цвет текста-подсказки "0" */
+            color: #666;
         }
 
-        /* ========== СПИСОК ВАЛЮТ ========== */
         #rates-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;             /* Расстояние между строками валют */
+            gap: 10px;
             width: 100%;
             flex: 1;
-            justify-content: space-evenly;  /* Равномерное распределение строк */
+            justify-content: space-evenly;
         }
 
-        /* Одна строка валюты (RU, VN, US и т.д.) */
         .rate-row {
-            background: #2a2a2e;   /* Цвет фона строки */
-            border-radius: 12px;   /* Закругление углов */
-            padding: 0 18px;       /* Отступы внутри строки (слева и справа) */
-            height: 72px;          /* Высота строки валюты */
+            background: #2a2a2e;
+            border-radius: 12px;
+            padding: 0 18px;
+            height: 72px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
         }
 
-        /* Название валюты (RU, VN и т.д.) */
+        /* Кнопка валюты (для переключения) */
         .rate-label {
             background: transparent;
             border: none;
             color: #fff;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            font-size: 22px;       /* Размер шрифта названия валюты */
+            font-size: 22px;
             font-weight: 600;
             padding: 0;
             text-align: left;
+            cursor: pointer;
+            transition: opacity 0.2s;
         }
 
-        /* Значение курса (0.00, 50.00 и т.д.) */
+        .rate-label:active {
+            opacity: 0.6;
+        }
+
         .rate-value {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            font-size: 22px;       /* Размер шрифта значения курса */
+            font-size: 22px;
             font-weight: 600;
             color: #fff;
         }
@@ -161,7 +211,15 @@
 </head>
 <body>
 <div class="container">
-    <img src="icons/icon-192.png" alt="Logo" class="logo" />
+    <!-- Логотип с кнопкой обновления -->
+    <div class="logo-container">
+        <button id="refresh-btn" class="refresh-btn" aria-label="Обновить курсы">
+            <svg class="refresh-icon" viewBox="0 0 24 24">
+                <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+            </svg>
+        </button>
+        <img src="icons/icon-192.png" alt="Logo" class="logo" />
+    </div>
 
     <div class="input-row">
         <label for="input-currency" class="visually-hidden">Валюта</label>
@@ -172,6 +230,8 @@
             <option value="EUR">EU</option>
             <option value="GBP">GB</option>
             <option value="CNY">CN</option>
+            <option value="TRY">TR</option>
+            <option value="AZN">AZ</option>
         </select>
 
         <label for="input-price" class="visually-hidden">Сумма</label>
@@ -195,13 +255,13 @@
             <button class="rate-label">EU</button>
             <div class="rate-value" id="rate-eur">0.00</div>
         </div>
-        <div class="rate-row">
-            <button class="rate-label">GB</button>
-            <div class="rate-value" id="rate-gbp">0.00</div>
+        <div class="rate-row" data-slot="5">
+            <button class="rate-label" id="slot5-label">GB</button>
+            <div class="rate-value" id="slot5-value">0.00</div>
         </div>
-        <div class="rate-row">
-            <button class="rate-label">CN</button>
-            <div class="rate-value" id="rate-cny">0.00</div>
+        <div class="rate-row" data-slot="6">
+            <button class="rate-label" id="slot6-label">CN</button>
+            <div class="rate-value" id="slot6-value">0.00</div>
         </div>
     </div>
 </div>
@@ -213,8 +273,16 @@
         EUR: 105.7139,
         GBP: 126.6892,
         CNY: 13.8533,
-        VND: 0.003949
+        VND: 0.003949,
+        TRY: 2.9150,
+        AZN: 59.0134
     };
+
+    // Настройки переключаемых слотов
+    let slot5Currencies = ['GBP', 'TRY']; // GB ⇄ TR
+    let slot6Currencies = ['CNY', 'AZN']; // CN ⇄ AZ
+    let slot5Index = 0;
+    let slot6Index = 0;
 
     function format(num) {
         return num.toLocaleString('en-US', {
@@ -251,13 +319,64 @@
         );
         const baseRate = rates[base];
 
-        for (const [code, rate] of Object.entries(rates)) {
+        // Обновляем фиксированные валюты
+        ['RUB', 'VND', 'USD', 'EUR'].forEach(code => {
             const elem = document.getElementById('rate-' + code.toLowerCase());
             if (elem) {
-                elem.textContent = format(amount * (rate / baseRate));
+                elem.textContent = format(amount * (rates[code] / baseRate));
             }
+        });
+
+        // Обновляем переключаемые слоты
+        updateSlot(5, slot5Currencies[slot5Index]);
+        updateSlot(6, slot6Currencies[slot6Index]);
+    }
+
+    function updateSlot(slotNum, currency) {
+        const base = document.getElementById('input-currency').value;
+        const amount = parseFloat(
+            document.getElementById('input-price').value.replace(/\s/g, '').replace(',', '.') || "0"
+        );
+        const baseRate = rates[base];
+        const elem = document.getElementById(`slot${slotNum}-value`);
+        if (elem) {
+            elem.textContent = format(amount * (rates[currency] / baseRate));
         }
     }
+
+    function getCurrencyShortName(code) {
+        const names = {
+            'GBP': 'GB', 'CNY': 'CN', 'TRY': 'TR', 'AZN': 'AZ'
+        };
+        return names[code] || code;
+    }
+
+    // Переключение валюты в слоте 5 (GB ⇄ TR)
+    document.getElementById('slot5-label').addEventListener('click', function() {
+        slot5Index = (slot5Index + 1) % slot5Currencies.length;
+        const newCurrency = slot5Currencies[slot5Index];
+        this.textContent = getCurrencyShortName(newCurrency);
+        updateRates();
+        localStorage.setItem('slot5Currency', newCurrency);
+    });
+
+    // Переключение валюты в слоте 6 (CN ⇄ AZ)
+    document.getElementById('slot6-label').addEventListener('click', function() {
+        slot6Index = (slot6Index + 1) % slot6Currencies.length;
+        const newCurrency = slot6Currencies[slot6Index];
+        this.textContent = getCurrencyShortName(newCurrency);
+        updateRates();
+        localStorage.setItem('slot6Currency', newCurrency);
+    });
+
+    // Кнопка обновления курсов
+    document.getElementById('refresh-btn').addEventListener('click', function() {
+        this.classList.add('spinning');
+        fetchRates();
+        setTimeout(() => {
+            this.classList.remove('spinning');
+        }, 1000);
+    });
 
     async function fetchRates() {
         try {
@@ -269,6 +388,9 @@
                 rates.GBP = data.rates.GBP || rates.GBP;
                 rates.CNY = data.rates.CNY || rates.CNY;
                 rates.VND = data.rates.VND || rates.VND;
+                rates.TRY = data.rates.TRY || rates.TRY;
+                rates.AZN = data.rates.AZN || rates.AZN;
+
                 localStorage.setItem('rates', JSON.stringify(rates));
                 localStorage.setItem('lastUpdate', new Date().toDateString());
                 updateRates();
@@ -281,6 +403,21 @@
     function checkAndUpdateRates() {
         const savedRates = localStorage.getItem('rates');
         if (savedRates) rates = JSON.parse(savedRates);
+
+        // Восстановить выбранные валюты
+        const savedSlot5 = localStorage.getItem('slot5Currency');
+        const savedSlot6 = localStorage.getItem('slot6Currency');
+
+        if (savedSlot5 && slot5Currencies.includes(savedSlot5)) {
+            slot5Index = slot5Currencies.indexOf(savedSlot5);
+            document.getElementById('slot5-label').textContent = getCurrencyShortName(savedSlot5);
+        }
+
+        if (savedSlot6 && slot6Currencies.includes(savedSlot6)) {
+            slot6Index = slot6Currencies.indexOf(savedSlot6);
+            document.getElementById('slot6-label').textContent = getCurrencyShortName(savedSlot6);
+        }
+
         if (localStorage.getItem('lastUpdate') !== new Date().toDateString()) {
             fetchRates();
         }
