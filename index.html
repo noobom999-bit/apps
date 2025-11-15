@@ -1,388 +1,198 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="Конвертер" />
-    <meta name="theme-color" content="#000000" />
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-    <title>Currency Converter</title>
+    html, body {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+    }
 
-    <link rel="manifest" href="manifest.json" />
-    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
-    <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png" />
-    <link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192.png" />
-    <link rel="apple-touch-icon" sizes="512x512" href="icons/icon-512.png" />
+    body {
+        background: #000;
+        color: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+        font-size: 20px;
+        font-weight: 600;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+    }
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    .container {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 20px 15px 25px 15px;
+    }
 
-        html, body {
-            overflow: hidden;
-            width: 100%;
-            height: 100%;
-            position: fixed;
-        }
+    .logo {
+        width: 140px;
+        height: 140px;
+        margin: 0 auto 12px;
+        display: block;
+    }
 
-        body {
-            background: #000;
-            color: #fff;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            font-size: 20px;
-            font-weight: 600;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0;
-        }
+    .input-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+        width: 100%;
+        flex-shrink: 0;
+    }
 
-        .container {
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 20px 15px;
-        }
+    .currency-select {
+        background: #2a2a2e;
+        border: none;
+        border-radius: 12px;
+        color: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 1.2;
+        height: 75px;
+        width: 75px;
+        min-width: 75px;
+        max-width: 75px;
+        padding: 0;
+        text-align: center;
+        cursor: pointer;
+        outline: none;
+        flex-shrink: 0;
+    }
 
+    .input-price {
+        background: #2a2a2e;
+        border: none;
+        border-radius: 12px;
+        color: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 1.2;
+        height: 75px;
+        flex: 1;
+        min-width: 0;
+        padding: 0 20px;
+        outline: none;
+    }
+
+    .input-price::placeholder {
+        color: #666;
+        font-size: 24px;
+        font-weight: 400;
+    }
+
+    #rates-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        flex: 1;
+        justify-content: space-evenly;
+    }
+
+    .rate-row {
+        background: #2a2a2e;
+        border-radius: 12px;
+        padding: 0 20px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .rate-label {
+        background: transparent;
+        border: none;
+        color: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 1.2;
+        cursor: pointer;
+        padding: 0;
+        text-align: left;
+    }
+
+    .rate-value {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 1.2;
+        color: #fff;
+    }
+
+    .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    @media (max-height: 700px) {
         .logo {
-            width: 180px;
-            height: 180px;
-            margin: 0 auto 15px;
-            display: block;
+            width: 120px;
+            height: 120px;
+            margin-bottom: 10px;
         }
 
         .input-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-            width: 100%;
-            flex-shrink: 0;
+            margin-bottom: 10px;
         }
 
-        .currency-select {
-            background: #2a2a2e;
-            border: none;
-            border-radius: 12px;
-            color: #fff;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            font-size: 24px;
-            font-weight: 600;
-            line-height: 1.2;
-            height: 75px;
-            width: 75px;
-            min-width: 75px;
-            max-width: 75px;
-            padding: 0;
-            text-align: center;
-            cursor: pointer;
-            outline: none;
-            flex-shrink: 0;
-        }
-
+        .currency-select,
         .input-price {
-            background: #2a2a2e;
-            border: none;
-            border-radius: 12px;
-            color: #fff;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            font-size: 24px;
-            font-weight: 600;
-            line-height: 1.2;
-            height: 75px;
-            flex: 1;
-            min-width: 0;
-            padding: 0 20px;
-            outline: none;
-        }
-
-        .input-price::placeholder {
-            color: #666;
-            font-size: 24px;
-            font-weight: 400;
-        }
-
-        #rates-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            width: 100%;
-            flex: 1;
-            justify-content: space-evenly;
+            height: 65px;
+            font-size: 22px;
         }
 
         .rate-row {
-            background: #2a2a2e;
-            border-radius: 12px;
-            padding: 0 20px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
+            height: 70px;
         }
 
-        .rate-label {
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            font-size: 24px;
-            font-weight: 600;
-            line-height: 1.2;
-            cursor: pointer;
-            padding: 0;
-            text-align: left;
-        }
-
+        .rate-label,
         .rate-value {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            font-size: 24px;
-            font-weight: 600;
-            line-height: 1.2;
-            color: #fff;
+            font-size: 22px;
         }
 
-        .visually-hidden {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            margin: -1px;
-            padding: 0;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-        }
-
-        @media (max-height: 700px) {
-            .logo {
-                width: 140px;
-                height: 140px;
-                margin-bottom: 10px;
-            }
-
-            .input-row {
-                margin-bottom: 10px;
-            }
-
-            .currency-select,
-            .input-price {
-                height: 65px;
-                font-size: 22px;
-            }
-
-            .rate-row {
-                height: 70px;
-            }
-
-            .rate-label,
-            .rate-value {
-                font-size: 22px;
-            }
-
-            #rates-list {
-                gap: 10px;
-            }
-        }
-
-        @media (max-height: 600px) {
-            .logo {
-                width: 110px;
-                height: 110px;
-            }
-
-            .currency-select,
-            .input-price {
-                height: 55px;
-                font-size: 20px;
-            }
-
-            .rate-row {
-                height: 60px;
-            }
-
-            .rate-label,
-            .rate-value {
-                font-size: 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-<div class="container">
-    <img src="icons/icon-192.png" alt="Логотип конвертера валют" class="logo" />
-
-    <div class="input-row">
-        <label for="input-currency" class="visually-hidden">Выберите валюту</label>
-        <select id="input-currency" class="currency-select" aria-label="Выберите валюту">
-            <option value="RUB">RU</option>
-            <option value="VND">VN</option>
-            <option value="USD">US</option>
-            <option value="EUR">EU</option>
-            <option value="GBP">GB</option>
-            <option value="CNY">CN</option>
-        </select>
-
-        <label for="input-price" class="visually-hidden">Введите сумму</label>
-        <input id="input-price" class="input-price" type="text" placeholder="0" aria-label="Введите сумму для конвертации" />
-    </div>
-
-    <div id="rates-list">
-        <div class="rate-row">
-            <button class="rate-label" aria-label="Конвертировать в рубли">RU</button>
-            <div class="rate-value" id="rate-rub">0.00</div>
-        </div>
-        <div class="rate-row">
-            <button class="rate-label" aria-label="Конвертировать в вьетнамские донги">VN</button>
-            <div class="rate-value" id="rate-vnd">0.00</div>
-        </div>
-        <div class="rate-row">
-            <button class="rate-label" aria-label="Конвертировать в доллары США">US</button>
-            <div class="rate-value" id="rate-usd">0.00</div>
-        </div>
-        <div class="rate-row">
-            <button class="rate-label" aria-label="Конвертировать в евро">EU</button>
-            <div class="rate-value" id="rate-eur">0.00</div>
-        </div>
-        <div class="rate-row">
-            <button class="rate-label" aria-label="Конвертировать в фунты стерлингов">GB</button>
-            <div class="rate-value" id="rate-gbp">0.00</div>
-        </div>
-        <div class="rate-row">
-            <button class="rate-label" aria-label="Конвертировать в китайские юани">CN</button>
-            <div class="rate-value" id="rate-cny">0.00</div>
-        </div>
-    </div>
-</div>
-
-<script>
-    let rates = {
-        RUB: 1,
-        USD: 100.3229,
-        EUR: 105.7139,
-        GBP: 126.6892,
-        CNY: 13.8533,
-        VND: 0.003949
-    };
-
-    function format(num) {
-        return num.toLocaleString('en-US', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        });
-    }
-
-    function formatInput(value) {
-        let parts = value.split(/[.,]/);
-        let integerPart = parts[0].replace(/\D/g, '');
-        let decimalPart = parts[1] ? parts[1].replace(/\D/g, '').substring(0, 2) : '';
-
-        let formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-
-        if (value.includes('.') || value.includes(',')) {
-            return formattedInteger + '.' + decimalPart;
-        }
-
-        return formattedInteger;
-    }
-
-    document.getElementById('input-price').addEventListener('input', function(e) {
-        let cursorPos = this.selectionStart;
-        let oldValue = this.value;
-        let oldLength = oldValue.length;
-
-        let hadDecimal = oldValue.includes('.') || oldValue.includes(',');
-
-        this.value = formatInput(this.value);
-
-        let newLength = this.value.length;
-        let diff = newLength - oldLength;
-        cursorPos += diff;
-
-        if (cursorPos > this.value.length) {
-            cursorPos = this.value.length;
-        }
-
-        this.setSelectionRange(cursorPos, cursorPos);
-
-        updateRates();
-    });
-
-    function updateRates() {
-        const base = document.getElementById('input-currency').value;
-        const amount = parseFloat(
-            document.getElementById('input-price').value
-                .replace(/\s/g, '')
-                .replace(',', '.') || "0"
-        );
-        const baseRate = rates[base];
-
-        for (const [code, rate] of Object.entries(rates)) {
-            const elem = document.getElementById('rate-' + code.toLowerCase());
-            if (elem) {
-                const result = amount * (rate / baseRate);
-                elem.textContent = format(result);
-            }
+        #rates-list {
+            gap: 10px;
         }
     }
 
-    async function fetchRates() {
-        try {
-            const response = await fetch('https://www.cbr-xml-daily.ru/latest.js');
-            const data = await response.json();
-
-            if (data && data.rates) {
-                rates.USD = data.rates.USD || rates.USD;
-                rates.EUR = data.rates.EUR || rates.EUR;
-                rates.GBP = data.rates.GBP || rates.GBP;
-                rates.CNY = data.rates.CNY || rates.CNY;
-                rates.VND = data.rates.VND || rates.VND;
-
-                localStorage.setItem('rates', JSON.stringify(rates));
-                localStorage.setItem('lastUpdate', new Date().toDateString());
-
-                console.log('Курсы обновлены');
-                updateRates();
-            }
-        } catch (error) {
-            console.log('Работаем офлайн');
-        }
-    }
-
-    function checkAndUpdateRates() {
-        const lastUpdate = localStorage.getItem('lastUpdate');
-        const today = new Date().toDateString();
-
-        const savedRates = localStorage.getItem('rates');
-        if (savedRates) {
-            rates = JSON.parse(savedRates);
+    @media (max-height: 600px) {
+        .logo {
+            width: 100px;
+            height: 100px;
         }
 
-        if (lastUpdate !== today) {
-            fetchRates();
+        .currency-select,
+        .input-price {
+            height: 55px;
+            font-size: 20px;
+        }
+
+        .rate-row {
+            height: 60px;
+        }
+
+        .rate-label,
+        .rate-value {
+            font-size: 20px;
         }
     }
-
-    document.getElementById('input-currency').addEventListener('change', updateRates);
-
-    checkAndUpdateRates();
-    updateRates();
-
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js').then(() => {
-                console.log('SW registered');
-            }).catch(console.error);
-        });
-    }
-</script>
-</body>
-</html>
+</style>
